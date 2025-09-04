@@ -6,7 +6,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {useEffect, useRef} from "react";
-// import {logout} from "../../firebase";
 
 const Header = () => {
   const navRef = useRef(null);
