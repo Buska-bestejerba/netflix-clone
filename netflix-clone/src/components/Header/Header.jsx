@@ -11,18 +11,18 @@ import {useEffect, useRef} from "react";
 const Header = () => {
   const navRef = useRef(null);
 
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       if (window.scrollY >= 80) {
-//         navRef.current?.classList.add("nav-dark");
-//       } else {
-//         navRef.current?.classList.remove("nav-dark");
-//       }
-//     };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 80) {
+        navRef.current?.classList.add("nav-dark");
+      } else {
+        navRef.current?.classList.remove("nav-dark");
+      }
+    };
 
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div ref={navRef} className="navbar">
