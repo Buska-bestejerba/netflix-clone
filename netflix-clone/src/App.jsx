@@ -1,13 +1,19 @@
-import Footer from "./components/Footer/Footer"
-import Header from "./components/Header/Header"
+import {Route, Routes} from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Player from "./pages/Player/Player";
+import {ToastContainer} from "react-toastify";
 
 const App = () => {
+ 
   return (
     <div>
-      <Header />
-      <Footer />
+      <ToastContainer theme="dark" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/player/:id" element={<Player />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

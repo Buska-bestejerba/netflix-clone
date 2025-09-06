@@ -5,7 +5,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
+
 
 const Header = () => {
   const navRef = useRef(null);

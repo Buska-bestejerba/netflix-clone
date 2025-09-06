@@ -1,0 +1,67 @@
+
+.title-cards {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.title-cards h2 {
+  margin-bottom: 8px;
+}
+.card-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+}
+.card-list::-webkit-scrollbar {
+  display: none;
+}
+.card-list .card {
+  display: flex;
+  flex-direction: column; /* image on top, title below */
+  text-decoration: none;
+  color: #fff;
+}
+
+.card-list .card img {
+  width: 240px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.card-list img:hover {
+  margin: 10px;
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  z-index: 2; /* bring hovered card above others */
+}
+.card-list .card-title {
+  margin-top: 7px; /* space between image and title */
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: 800px) {
+  .title-cards {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+  .title-cards h2 {
+    font-size: 20px;
+  }
+  .card-list img {
+    width: 200px;
+  }
+  .card-list p {
+    font-size: 12px;
+  }
+}
+@media (max-width: 500px) {
+  .title-cards h2 {
+    font-size: 15px;
+  }
+  .card-list img {
+    width: 165px;
+  }
+  .card-list p {
+    font-size: 10px;
+  }
+}
