@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import Header from "../../components/Header/Header";
-import "./Home.css";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
-import TitleCards from "../../components/TitleCards/TitleCards";
+import Row from "../../components/Row/Row";
+import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import "./Home.css";
+import axiosInstance from "../../utils/axios";
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
 const POSTER_BASE_URL = import.meta.env.VITE_POSTER_BASE_URL;
 
@@ -20,14 +20,10 @@ const Home = () => {
   useEffect(() => {
     const fetchHeroMovie = async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+        const res = await axiosInstance.get(
+          `/movie/popular?language=en-US&page=1`
         );
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-
+        const data = res.data;
         const randomIndex = Math.floor(Math.random() * data.results.length);
         const movie = data.results[randomIndex];
         setHeroMovie(movie);
@@ -35,8 +31,6 @@ const Home = () => {
         console.error("Error fetching hero movie:", error);
       }
     };
-
-
     fetchHeroMovie();
   }, []);
 
@@ -70,7 +64,7 @@ const Home = () => {
                   More Info
                 </button>
               </div>
-              <TitleCards title={"Now Playing"} category={"now_playing"} />
+              <Row title={"Now Playing"} category={"now_playing"} />
             </div>
           </>
         )}
@@ -113,9 +107,9 @@ const Home = () => {
       )}
 
       <div className="more-cards">
-        <TitleCards title={"Popular"} category={"popular"} />
-        <TitleCards title={"Upcoming"} category={"upcoming"} />
-        <TitleCards title={"Top Rated"} category={"top_rated"} />
+        <Row title={"Popular"} category={"popular"} />
+        <Row title={"Upcoming"} category={"upcoming"} />
+        <Row title={"Top Rated"} category={"top_rated"} />
       </div>
 
       <Footer />

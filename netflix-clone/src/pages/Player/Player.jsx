@@ -1,7 +1,8 @@
 import "./Player.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../utils/axios";
 
 const Player = () => {
   const {id} = useParams();
@@ -14,29 +15,23 @@ const Player = () => {
     typeof: "",
   });
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
-
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}/videos
-`,
-      options
-    )
-      .then((res) => res.json())
-      .then((res) => {
+    const fetchTrailer = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/movie/${id}/videos?language=en-US`
+        );
+        const results = res.data.results;
         const trailer =
-          res.results.find(
+          results.find(
             (vid) => vid.type === "Trailer" && vid.site === "YouTube"
-          ) || res.results[0];
+          ) || results[0];
         setApiData(trailer || {});
-      })
-      .catch((err) => console.error(err));
+      } catch (err) {
+        console.error("Error fetching trailer:", err);
+      }
+    };
+    if (id) fetchTrailer();
   }, [id]);
 
   return (

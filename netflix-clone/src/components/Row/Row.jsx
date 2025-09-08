@@ -1,48 +1,42 @@
 import {useRef, useEffect, useState} from "react";
-import "./TitleCards.css";
-import {Link} from "react-router-dom";
+import "./Row.css";
+import { Link } from "react-router-dom"; 
+import axiosInstance from "../../utils/axios";
 
 const TitleCards = ({title, category}) => {
   const [apiData, setApiData] = useState([]);
 
   const cardsRef = useRef(null);
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTI5Nzk1NDE0MTc1MzAzMDdkNDY2YzE0ZjlmMzI2NCIsIm5iZiI6MTc1NzE5NDc5MS4xODUsInN1YiI6IjY4YmNhYTI3N2U0MTk2NWI5MTk0NzFjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DXuwbaizK7pye1wxNkduFw9u652-hOvzzSEUBkDhWiQ`,
-    },
-  };
-
-  const handleWheel = (event) => {3
+  const handleWheel = (event) => {
+    3;
     event.preventDefault();
-    cardsRef.current.scrollLeft += event.deltaY; // ✅ fixed typo
+    cardsRef.current.scrollLeft += event.deltaY;
   };
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${
-        category ? category : "popular"
-      }?language=en-US&page=1`,
-      options
-    )
-      .then((res) => res.json())
-      .then((res) => setApiData(res.results))
-      .catch((err) => console.error(err));
+    const fetchMovies = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/movie/${category ? category : "popular"}?language=en-US&page=1`
+        );
+        setApiData(res.data.results);
+      } catch (err) {
+        console.error("Error fetching movies:", err);
+      }
+    };
+    fetchMovies();
 
     const container = cardsRef.current;
     if (container) {
-      container.addEventListener("wheel", handleWheel, { passive: false });
+      container.addEventListener("wheel", handleWheel, {passive: false});
     }
-
-    // ✅ cleanup
     return () => {
       if (container) {
         container.removeEventListener("wheel", handleWheel);
       }
     };
-  }, []);
+  }, [category]);
 
   return (
     <div className="title-cards">
